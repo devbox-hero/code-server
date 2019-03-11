@@ -10,7 +10,7 @@ const libPath = path.join(__dirname, "../lib");
 const vscodePath = path.join(libPath, "vscode");
 const pkgsPath = path.join(__dirname, "../packages");
 const defaultExtensionsPath = path.join(libPath, "VSCode-linux-x64/resources/app/extensions");
-const vscodeVersion = "1.32.1";
+const vscodeVersion = "1.32";
 
 const buildServerBinary = register("build:server:binary", async (runner) => {
 	await ensureInstalled();
