@@ -37,4 +37,5 @@ deploy:
     - release/*.zip
   on:
     repo: devbox-hero/code-server
+    branch: master
 cache: yarn
