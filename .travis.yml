@@ -26,9 +26,9 @@ deploy:
   provider: releases
   file_glob: true
   draft: true
-  tag_name: "$TRAVIS_TAG"
+  tag_name: "$VERSION"
   target_commitish: "$TRAVIS_COMMIT"
-  name: "$TRAVIS_TAG"
+  name: "$VERSION"
   skip_cleanup: true
   api_key:
     secure: vZSm/8u50ZJvg1/wl/Lx4Noa8t1L3/zzTlnCmusWkr7CVgymN25cBTGW9X73waBFDszCAO+dswDmMjs44V/7/9Wfnkvk7xjUe7f+AhNhH1d8jomDQKQr9Xja6sgBo/ugMdqzIgJuMkaF/P1Y3S28GJJj7aJiMUMHvBw9NE2q4PBQ9HZcFJr1mkEgsKi4MofECUNCSVsnkMWigNBs1WNWMPOqmcl8npKV79o+t2OVc9EK4k9urLrg+XFFgB/oXeSoiB9X1UH0pXufN/JmiIMzQtlV9aHdAT+09LzqyFVZN1CmnPLZwqqtJCYwco5eDGrBBTPjtwTNXH9EH/uADk1iqQel4hIqkMD9MbZEkBg+JOWmbTqYXBrk+Y02dxhjfXMyp8YZOqp+nv78phRmjOp6FG7hPK3vDNScaqj3ASWeRLy0KDc5Jluw+LfP7K69zYevNQ0KyD1ug0XduFdtotE5SJVLS9KOouWY6wu/80hQg/BPqNGl+4HVC6Zdn6EWT8FTIBlCOlyNUJVfLlJgGsUPgkSPUd5pCnFpymvZYcqpzNP6RVmkkBxlSP9nV2cf8YytQy6k0zduPOdbbcVj4f8+1Nqeq9veQ3mv42Yi29O4QopPQ/o3bVSz2ooQSnXG/7+k8pgq1FUrHXKic8VDEUAnubfn9iNgke0hFqc1RCOx0kU=
