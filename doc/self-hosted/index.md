@@ -46,23 +46,26 @@ OPTIONS
   -o, --open               Open in browser on startup
   -p, --port=port          [default: 8443] Port to bind on
   -v, --version            show CLI version
+  --allow-http
   --cert=cert
   --cert-key=cert-key
   --help                   show CLI help
+  --no-auth
+  --password=password
   ```
 
   ### Data directory
   Use `code-server -d (path/to/directory)` or `code-server --data-dir=(path/to/directory)`, excluding the parentheses to specify the root folder that VS Code will start in
 
   ### Host
-  By default, code-server will use `0.0.0.0` as it's address. This can be changed by using `code-server -h` or `code-server --host=` followed by the address you want to use. 
+  By default, code-server will use `0.0.0.0` as its address. This can be changed by using `code-server -h` or `code-server --host=` followed by the address you want to use. 
   > Example: `code-server -h 127.0.0.1`
 
   ### Open
   You can have the server automatically open the VS Code in your browser on startup by using the `code server -o` or `code-server --open` flags
 
   ### Port  
-  By default, code-server will use `8443` as it's port. This can be changed by using `code-server -p` or `code-server --port=` followed by the port you want to use. 
+  By default, code-server will use `8443` as its port. This can be changed by using `code-server -p` or `code-server --port=` followed by the port you want to use. 
   > Example: `code-server -p 9000`
 
   ### Cert and Cert Key
@@ -70,6 +73,21 @@ OPTIONS
 > Example (certificate and key): `code-server --cert /etc/letsencrypt/live/example.com/fullchain.cer --cert-key /etc/letsencrypt/live/example.com/fullchain.key`
 
 > To ensure the connection between you and your server is encrypted view our guide on [securing your setup](../security/ssl.md)
+
+  ### Nginx Reverse Proxy
+  Nginx is for reverse proxy. Here is a example virtual host that works with code-server. Please also pass --allow-http. You can also use certbot by EFF to get a ssl certificates for free.
+  ```
+  server {
+    listen 80;
+    listen [::]:80;
+    server_name code.example.com code.example.org;
+      location / {
+         proxy_pass http://localhost:8443/;
+         proxy_set_header Upgrade $http_upgrade;
+         proxy_set_header Connection upgrade;
+      }
+   }
+  ```
 
   ### Help
   Use `code-server -h` or `code-server --help` to view the usage for the cli. This is also shown at the beginning of this section.

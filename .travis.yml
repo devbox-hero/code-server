@@ -1,6 +1,11 @@
 language: node_js
 node_js:
-- 8.9.3
+- 8.15.0
+env:
+  global:
+    secure: gf/3J6XEFhEbaWesAaGtjvcMCmt07ztiIzHPzJuZXp5GIxImmZJk+F1ZNWSYcw2X7jcpyj20NvWUigX7FvzRE5L7LPEbzNugVLYHjw7YSzqtAacMnmOYmMnhjzed8mWmGjwEKiDy1qWQq/b+2GWuR5LH74/pEYF0/3M5XwEvQFGleZ1CVdemTeHBgjvAye6jBtOvJXijEprfiFbaNvWLgecwBtIlW76J9t+SEPWGe29nMNvMJl6rYvsT8sTnsTc2tL2v6kOpSTb3KgIyGPSajVJQ8v2JjlDIVUMPRObVfHQ979B3WkMfkL+zuy9rbxXAT/FDZwuV15nN33OoONDl+uql200zpBk6Co7SQEanH1bUu1SiyowQ3dH5cYm+dOd+Xep06e/79UjzAyw08ok6nqHEraotwZUjh0wILiaX4EU72x1apyDPxCnFUUyKpH7MMxI/OUMMSrVOThBLJS+ZcRCQ3EPL8yEHwJ2wKfB6xnbaX/ctUhcSi15GcC5ZyfS12KHOwHgeasheKvOSjrzZV1pxVn+7BG8sr/LwnzUbC7CiBoAYzv/9e+kfVXhgIdRq75zRltJLVQQQU9Bk32iOjprxiK8XO5VBfwGKCtMGTrBbb8Q1sXgTOyoxvfR5hIKlnPu5gF4mCsCt9Jll496pzQnKhzEvTt3SM/02/5YpQjw=
+  matrix:
+    - VERSION="1.32.0-$TRAVIS_BUILD_NUMBER"
 matrix:
   include:
   - os: linux
@@ -12,11 +17,11 @@ before_install:
 script:
 - scripts/build.sh
 before_deploy:
-- export TRAVIS_TAG="1.31.0-$TRAVIS_BUILD_NUMBER"
-- echo "$TRAVIS_TAG" "$TRAVIS_COMMIT"
+- echo "$VERSION" "$TRAVIS_COMMIT"
 - git config --local user.name "$USER_NAME"
 - git config --local user.email "$USER_EMAIL"
-- git tag "$TRAVIS_TAG" "$TRAVIS_COMMIT"
+- git tag "$VERSION" "$TRAVIS_COMMIT"
+- yarn task package "$VERSION"
 deploy:
   provider: releases
   file_glob: true
@@ -27,9 +32,9 @@ deploy:
   skip_cleanup: true
   api_key:
     secure: vZSm/8u50ZJvg1/wl/Lx4Noa8t1L3/zzTlnCmusWkr7CVgymN25cBTGW9X73waBFDszCAO+dswDmMjs44V/7/9Wfnkvk7xjUe7f+AhNhH1d8jomDQKQr9Xja6sgBo/ugMdqzIgJuMkaF/P1Y3S28GJJj7aJiMUMHvBw9NE2q4PBQ9HZcFJr1mkEgsKi4MofECUNCSVsnkMWigNBs1WNWMPOqmcl8npKV79o+t2OVc9EK4k9urLrg+XFFgB/oXeSoiB9X1UH0pXufN/JmiIMzQtlV9aHdAT+09LzqyFVZN1CmnPLZwqqtJCYwco5eDGrBBTPjtwTNXH9EH/uADk1iqQel4hIqkMD9MbZEkBg+JOWmbTqYXBrk+Y02dxhjfXMyp8YZOqp+nv78phRmjOp6FG7hPK3vDNScaqj3ASWeRLy0KDc5Jluw+LfP7K69zYevNQ0KyD1ug0XduFdtotE5SJVLS9KOouWY6wu/80hQg/BPqNGl+4HVC6Zdn6EWT8FTIBlCOlyNUJVfLlJgGsUPgkSPUd5pCnFpymvZYcqpzNP6RVmkkBxlSP9nV2cf8YytQy6k0zduPOdbbcVj4f8+1Nqeq9veQ3mv42Yi29O4QopPQ/o3bVSz2ooQSnXG/7+k8pgq1FUrHXKic8VDEUAnubfn9iNgke0hFqc1RCOx0kU=
-  file: packages/server/cli-*
+  file:
+    - release/*.tar.gz
+    - release/*.zip
   on:
     repo: devbox-hero/code-server
-env:
-  global:
-    secure: gf/3J6XEFhEbaWesAaGtjvcMCmt07ztiIzHPzJuZXp5GIxImmZJk+F1ZNWSYcw2X7jcpyj20NvWUigX7FvzRE5L7LPEbzNugVLYHjw7YSzqtAacMnmOYmMnhjzed8mWmGjwEKiDy1qWQq/b+2GWuR5LH74/pEYF0/3M5XwEvQFGleZ1CVdemTeHBgjvAye6jBtOvJXijEprfiFbaNvWLgecwBtIlW76J9t+SEPWGe29nMNvMJl6rYvsT8sTnsTc2tL2v6kOpSTb3KgIyGPSajVJQ8v2JjlDIVUMPRObVfHQ979B3WkMfkL+zuy9rbxXAT/FDZwuV15nN33OoONDl+uql200zpBk6Co7SQEanH1bUu1SiyowQ3dH5cYm+dOd+Xep06e/79UjzAyw08ok6nqHEraotwZUjh0wILiaX4EU72x1apyDPxCnFUUyKpH7MMxI/OUMMSrVOThBLJS+ZcRCQ3EPL8yEHwJ2wKfB6xnbaX/ctUhcSi15GcC5ZyfS12KHOwHgeasheKvOSjrzZV1pxVn+7BG8sr/LwnzUbC7CiBoAYzv/9e+kfVXhgIdRq75zRltJLVQQQU9Bk32iOjprxiK8XO5VBfwGKCtMGTrBbb8Q1sXgTOyoxvfR5hIKlnPu5gF4mCsCt9Jll496pzQnKhzEvTt3SM/02/5YpQjw=
+cache: yarn
