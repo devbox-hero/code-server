@@ -36,6 +36,6 @@ deploy:
     - release/*.tar.gz
     - release/*.zip
   on:
-    repo: devonline/code-server
+    repo: devonlineco/code-server
     branch: master
 cache: yarn
