@@ -19,8 +19,8 @@ import * as commander from "commander";
 commander.version(process.env.VERSION || "development")
 	.name("code-server")
 	.description("Run VS Code on a remote server.")
-	.option("--cert")
-	.option("--cert-key")
+	.option("--cert <value>")
+	.option("--cert-key <value>")
 	.option("-d, --data-dir <value>", "Customize where user-data is stored.")
 	.option("-h, --host <value>", "Customize the hostname.", "0.0.0.0")
 	.option("-o, --open", "Open in the browser on startup.", false)
@@ -238,7 +238,7 @@ if (isCli) {
 	if (!options.certKey && !options.cert) {
 		logger.warn("No certificate specified. \u001B[1mThis could be insecure.");
 		// TODO: fill in appropriate doc url
-		logger.warn("Documentation on securing your setup: https://coder.com/docs");
+		logger.warn("Documentation on securing your setup: https://github.com/codercom/code-server/blob/master/doc/security/ssl.md");
 	}
 
 	if (!options.noAuth) {
