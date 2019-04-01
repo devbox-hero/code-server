@@ -6,6 +6,7 @@ const PreloadWebpackPlugin = require("preload-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const WebpackPwaManifest = require("webpack-pwa-manifest");
 const { GenerateSW } = require("workbox-webpack-plugin");
+const MonacoWebpackPlugin = require('monaco-editor-webpack-plugin');
 
 // const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
 
@@ -105,7 +106,8 @@ module.exports = (options = {}) =>
         },
       }*/
         ]
-      })
+      }),
+      new MonacoWebpackPlugin()
     ].concat(prod ? [] : [new webpack.HotModuleReplacementPlugin()]),
     target: "web"
   });
