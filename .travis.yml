@@ -38,5 +38,5 @@ deploy:
   on:
     repo: devonlineco/code-server
     all_branches: true
-    condition: $TRAVIS_BRANCH =~ ^master|testing$
+    condition: $TRAVIS_BRANCH =~ ^master|testing|stable$
 cache: yarn
