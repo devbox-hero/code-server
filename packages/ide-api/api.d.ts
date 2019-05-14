@@ -1,5 +1,7 @@
 // tslint:disable no-any
 
+import { ITerminalService } from "vs/workbench/contrib/terminal/common/terminal";
+
 export interface EvalHelper { }
 interface ActiveEvalEmitter {
 	removeAllListeners(event?: string): void;
@@ -136,14 +138,20 @@ interface ICommandRegistry {
 	registerCommand(command: ICommand): IDisposable;
 }
 
+interface IStorageService {
+	save(): Promise<void>;
+}
+
 declare namespace ide {
 	export const client: {};
 
 	export const workbench: {
 		readonly statusbarService: IStatusbarService;
 		readonly notificationService: INotificationService;
+		readonly storageService: IStorageService;
 		readonly menuRegistry: IMenuRegistry;
 		readonly commandRegistry: ICommandRegistry;
+		readonly terminalService: ITerminalService;
 
 		onFileCreate(cb: (path: string) => void): void;
 		onFileMove(cb: (path: string, target: string) => void): void;

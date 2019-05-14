@@ -1,16 +1,30 @@
 language: node_js
 node_js:
+<<<<<<< HEAD
 - 8.15.0
 env:
   global:
     secure: gf/3J6XEFhEbaWesAaGtjvcMCmt07ztiIzHPzJuZXp5GIxImmZJk+F1ZNWSYcw2X7jcpyj20NvWUigX7FvzRE5L7LPEbzNugVLYHjw7YSzqtAacMnmOYmMnhjzed8mWmGjwEKiDy1qWQq/b+2GWuR5LH74/pEYF0/3M5XwEvQFGleZ1CVdemTeHBgjvAye6jBtOvJXijEprfiFbaNvWLgecwBtIlW76J9t+SEPWGe29nMNvMJl6rYvsT8sTnsTc2tL2v6kOpSTb3KgIyGPSajVJQ8v2JjlDIVUMPRObVfHQ979B3WkMfkL+zuy9rbxXAT/FDZwuV15nN33OoONDl+uql200zpBk6Co7SQEanH1bUu1SiyowQ3dH5cYm+dOd+Xep06e/79UjzAyw08ok6nqHEraotwZUjh0wILiaX4EU72x1apyDPxCnFUUyKpH7MMxI/OUMMSrVOThBLJS+ZcRCQ3EPL8yEHwJ2wKfB6xnbaX/ctUhcSi15GcC5ZyfS12KHOwHgeasheKvOSjrzZV1pxVn+7BG8sr/LwnzUbC7CiBoAYzv/9e+kfVXhgIdRq75zRltJLVQQQU9Bk32iOjprxiK8XO5VBfwGKCtMGTrBbb8Q1sXgTOyoxvfR5hIKlnPu5gF4mCsCt9Jll496pzQnKhzEvTt3SM/02/5YpQjw=
   matrix:
     - VSCODE_VERSION="1.33.0" MAJOR_VERSION="1" VERSION="$MAJOR_VERSION.$TRAVIS_BUILD_NUMBER-vsc$VSCODE_VERSION"
+=======
+- 10.15.1
+services:
+- docker
+>>>>>>> upstream/master
 matrix:
   include:
   - os: linux
     dist: trusty
+    env:
+      - VSCODE_VERSION="1.33.1" MAJOR_VERSION="1" VERSION="$MAJOR_VERSION.$TRAVIS_BUILD_NUMBER-vsc$VSCODE_VERSION" TARGET="centos"
+  - os: linux
+    dist: trusty
+    env:
+      - VSCODE_VERSION="1.33.1" MAJOR_VERSION="1" VERSION="$MAJOR_VERSION.$TRAVIS_BUILD_NUMBER-vsc$VSCODE_VERSION" TARGET="alpine"
   - os: osx
+    env:
+      - VSCODE_VERSION="1.33.1" MAJOR_VERSION="1" VERSION="$MAJOR_VERSION.$TRAVIS_BUILD_NUMBER-vsc$VSCODE_VERSION"
 before_install:
 - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get install libxkbfile-dev
   libsecret-1-dev; fi
@@ -22,7 +36,7 @@ before_deploy:
 - git config --local user.name "$USER_NAME"
 - git config --local user.email "$USER_EMAIL"
 - git tag "$VERSION" "$TRAVIS_COMMIT"
-- yarn task package "$VERSION"
+- if [[ “$TRAVIS_OS_NAME” == “osx” ]]; then yarn task package $VERSION; fi
 deploy:
   provider: releases
   file_glob: true
@@ -37,9 +51,14 @@ deploy:
     - release/*.tar.gz
     - release/*.zip
   on:
+<<<<<<< HEAD
     repo: devonlineco/code-server
     all_branches: true
     condition: $TRAVIS_BRANCH =~ ^master|testing|stable$
+=======
+    repo: cdr/code-server
+    branch: master
+>>>>>>> upstream/master
 cache:
   yarn: true
   timeout: 1000
